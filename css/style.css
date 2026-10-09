@@ -1,6 +1,11 @@
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
@@ -15,6 +20,7 @@ body {
   overflow: hidden;
 }
 
+/* ===== Header / Footer ===== */
 .site-header,
 .site-footer {
   flex: 0 0 auto;
@@ -25,23 +31,28 @@ body {
   justify-content: center;
 }
 
+/* ===== 書本區：左按鈕 + 書本 + 右按鈕 ===== */
 .book-container {
   flex: 1 1 0;
   min-height: 0;
   width: 100%;
   padding: 2vh 3vw;
+  gap: 2vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #book {
-  flex: 0 0 auto; /* 尺寸由 script.js 精準計算，不要讓 flex 拉伸 */
+  flex: 0 0 auto; /* 尺寸由 script.js 精準計算 */
   transition: transform 0.6s ease-in-out; /* 翻頁結束後才滑動置中 */
   will-change: transform;
 }
 
-.my-page { background-color: #fff; overflow: hidden; }
+.my-page {
+  background-color: #fff;
+  overflow: hidden;
+}
 
 .my-page img {
   display: block;
@@ -51,9 +62,7 @@ body {
   pointer-events: none;
 }
 
-/* ===== 左右翻頁按鈕 ===== */
-.book-container { gap: 2vw; }
-
+/* ===== 翻頁按鈕 ===== */
 .nav-btn {
   flex: 0 0 auto;
   width: 48px;
@@ -64,13 +73,20 @@ body {
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
+  transition:
+    background 0.2s,
+    opacity 0.2s;
   z-index: 2;
 }
-.nav-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.15); }
-.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+}
+.nav-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
 
-/* ===== 頁數 + 進度條 ===== */
+/* ===== 頁碼 + 進度條 ===== */
 .book-controls {
   flex: 0 0 auto;
   display: flex;
@@ -80,25 +96,82 @@ body {
   padding: 4px 16px 10px;
 }
 
-#page-label { font-size: 14px; letter-spacing: 0.1em; font-variant-numeric: tabular-nums; }
+#page-label {
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
 
 #progress {
   position: relative;
   width: min(420px, 80vw);
-  height: 24px;            /* 加大點擊／拖曳範圍 */
+  height: 24px; /* 加大點擊／拖曳範圍 */
   display: flex;
   align-items: center;
   cursor: pointer;
-  touch-action: none;      .nav-row {
+  touch-action: none; /* 手機拖曳時不要捲動頁面 */
+  user-select: none;
+}
+
+.progress-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+  transition: height 0.15s;
+}
+#progress:hover .progress-track,
+#progress.dragging .progress-track {
+  height: 6px;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0;
+  background: #fff;
+}
+
+/* 拖曳圓點 */
+#progress-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.15s;
+  pointer-events: none;
+}
+#progress:hover #progress-thumb,
+#progress.dragging #progress-thumb {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* 手機用：[←] ━━━●━━━ [→] 一列 */
+.nav-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
+  gap: 8px;
+  width: 100%;
+  max-width: 460px;
+}
+.nav-row #progress {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+/* 手機上圓點常駐顯示，比較好抓 */
+.nav-row #progress-thumb {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* ===== 手機專用版面 (寬度 700px 以下) ===== */
 @media (max-width: 700px) {
-  /* 不再鎖死視窗高度，內容多時可以自然往下捲，頁尾文字不會被切掉 */
+  /* 不再鎖死視窗高度，內容多時可以自然往下捲 */
   body {
     height: auto;
     min-height: 100vh;
@@ -117,21 +190,31 @@ body {
     font-size: 18px;
     line-height: 1.5;
   }
+  .site-footer {
+    font-size: 11px;
+  }
   .site-footer p {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.8;
   }
 
-  /* 書本撐滿寬度、高度跟著比例走 */
+  /* 書本撐滿寬度，高度跟著比例走 */
   .book-container {
     flex: 0 0 auto;
     padding: 20px 6px 8px;
     gap: 0;
   }
 
-  /* 按鈕 + 頁碼 + 進度條 */
-  .book-controls { padding: 6px 16px 22px; gap: 14px; }
-  .nav-btn { width: 44px; height: 44px; font-size: 18px; }
-  #page-label { min-width: 110px; text-align: center; font-size: 15px; }
-  #progress { width: min(340px, 86vw); }
+  .book-controls {
+    padding: 6px 16px 22px;
+    gap: 6px;
+  }
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  #page-label {
+    font-size: 14px;
+  }
 }

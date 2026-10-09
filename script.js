@@ -27,14 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function placeLayout() {
     if (mobileMQ.matches) {
-      // [←] 08–09 / 52 [→]  下面接進度條
-      navRow.append(btnPrev, label, btnNext);
-      controlsEl.prepend(navRow);
+      // 頁碼在上；下面一列：[←] ━━━●━━━ [→]
+      navRow.append(btnPrev, bar, btnNext);
+      controlsEl.append(label, navRow);
     } else {
-      // 桌機：按鈕回到書本左右，頁碼回到進度條上方
+      // 桌機：按鈕回到書本左右，頁碼在上、進度條在下
       mainEl.insertBefore(btnPrev, bookEl);
       mainEl.appendChild(btnNext);
-      controlsEl.prepend(label);
+      controlsEl.append(label, bar);
       navRow.remove();
     }
   }
