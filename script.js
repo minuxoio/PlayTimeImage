@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // 版本檢查：F12 → Console 看得到，就代表線上跑的是這一版
+  console.log(
+    "[viewer] script v8 / css:",
+    getComputedStyle(document.documentElement).getPropertyValue(
+      "--viewer-version",
+    ) || "舊版或沒套用",
+  );
   const bookEl = document.getElementById("book");
   const mainEl = bookEl.parentElement; // .book-container
   const pages = document.querySelectorAll(".my-page");
