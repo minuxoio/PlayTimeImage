@@ -40,7 +40,7 @@ body {
 
 .site-footer {
   font-size: 12px;
-  line-height: 1.6;
+  line-height: 2;
 }
 
 /* ===== 書本區：左按鈕 + 書本 + 右按鈕 ===== */
@@ -242,5 +242,10 @@ body {
   }
   #page-label {
     font-size: 14px;
+  }
+
+  .site-footer {
+    font-size: 10px;
+    line-height: 2;
   }
 }
