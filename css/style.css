@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #2b2b2b;
+  color: #fff;
+  font-family: "Noto Sans TC", sans-serif;
+  overflow: hidden;
+}
+
+.site-header,
+.site-footer {
+  flex: 0 0 auto;
+  height: 8%;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-container {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  padding: 2vh 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 書本滑動時不要出現橫向捲軸 */
+}
+
+#book {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease-in-out; /* 翻頁結束後才滑動置中 */
+  will-change: transform;
+}
+
+.my-page {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.my-page img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* ===== 左右翻頁按鈕 ===== */
+.book-container {
+  gap: 2vw;
+}
+
+.nav-btn {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+  z-index: 2;
+}
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+}
+.nav-btn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+/* ===== 頁數 + 進度條 ===== */
+.book-controls {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 16px 10px;
+}
+
+#page-label {
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+#progress {
+  width: min(420px, 80vw);
+  height: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.progress-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+#progress-fill {
+  height: 100%;
+  width: 0;
+  background: #fff;
+  transition: width 0.5s ease;
+}
+
+#name {
+  font-size: 12px;
+  text-align: center;
+  line-height: 2;
+}
+
+/* 手機：按鈕縮小、貼近邊緣 */
+@media (max-width: 600px) {
+  .book-container {
+    padding: 1vh 1vw;
+    gap: 0;
+  }
+  .nav-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+}
