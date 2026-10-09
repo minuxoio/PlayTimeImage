@@ -39,8 +39,14 @@ body {
 }
 
 .site-footer {
+  flex-direction: column;
   font-size: 12px;
-  line-height: 2;
+  line-height: 1.6;
+}
+
+/* 桌機：Designer | Contributor 同一行，© 在下一行 */
+.site-footer .divider {
+  margin: 0 0.8em;
 }
 
 /* ===== 書本區：左按鈕 + 書本 + 右按鈕 ===== */
@@ -219,6 +225,14 @@ body {
   .site-footer {
     font-size: 11px;
   }
+  /* 手機：每組各自一行，不顯示中間的「|」，也不會從名字中間斷行 */
+  .site-footer .credit {
+    display: block;
+    white-space: nowrap;
+  }
+  .site-footer .divider {
+    display: none;
+  }
   .site-footer p {
     font-size: 11px;
     line-height: 1.8;
@@ -242,10 +256,5 @@ body {
   }
   #page-label {
     font-size: 14px;
-  }
-
-  .site-footer {
-    font-size: 10px;
-    line-height: 2;
   }
 }

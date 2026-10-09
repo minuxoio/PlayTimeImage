@@ -47,9 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   placeLayout();
 
-  /* ---------- 1. 把 #book 算成「剛好等於書本比例」的像素尺寸 ----------
-     stretch 模式下，如果容器比書本還寬，套件需要自己置中，
-     硬皮翻頁（封面/封底）會因此錯位。所以直接給它剛好的大小，不留空白。 */
+  /* ---------- 1. 把 #book 算成「剛好等於書本比例」的像素尺寸 ---------- */
   function sizeBook() {
     const cs = getComputedStyle(mainEl);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
@@ -68,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const availH = mainEl.clientHeight - padY;
       w = Math.min(availW, availH * ratio);
     }
-    mainEl.style.setProperty("--book-w", Math.floor(w) + "px"); // 給 CSS 定位按鈕用
+    mainEl.style.setProperty("--book-w", Math.floor(w) + "px"); // CSS 定位按鈕用
     bookEl.style.width = Math.floor(w) + "px";
     bookEl.style.height = Math.floor(w / ratio) + "px";
   }
@@ -83,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     minHeight: 400,
     maxHeight: 2500,
     showCover: true,
-    usePortrait: false, // 手機也維持對開
+    usePortrait: false, // 手機維持對開
     mobileScrollSupport: false,
     flippingTime: 800,
     maxShadowOpacity: 0.5,
@@ -134,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "ArrowLeft" && !btnPrev.disabled) btnPrev.click();
   });
 
-  /* ---------- 5. 可拖曳的進度條（像影片進度條） ---------- */
+  /* ---------- 5. 可拖曳進度條---------- */
   // 雙頁模式下內頁以「左頁」為單位（1,3,5…），把偶數換成它的左頁
   function normalize(i) {
     if (isLandscape() && i > 0 && i < total - 1 && i % 2 === 0) return i - 1;
