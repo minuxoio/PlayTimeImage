@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // 版本檢查：F12 → Console 看得到，就代表線上跑的是這一版
   console.log(
-    "[viewer] script v8 / css:",
+    "[viewer] script v9 / css:",
     getComputedStyle(document.documentElement).getPropertyValue(
       "--viewer-version",
     ) || "舊版或沒套用",
@@ -61,15 +61,14 @@ document.addEventListener("DOMContentLoaded", function () {
       // 手機：容器高度由內容決定，只看寬度，書本撐滿整個螢幕寬
       w = mainEl.clientWidth - padX;
     } else {
-      const gap = parseFloat(cs.columnGap) || 0;
+      // 桌機：左右按鈕是絕對定位，不佔版面，只需預留兩側空間
       const sideBtns =
-        btnPrev.parentElement === mainEl
-          ? btnPrev.offsetWidth + btnNext.offsetWidth + gap * 2
-          : 0;
+        btnPrev.parentElement === mainEl ? 2 * (btnPrev.offsetWidth + 24) : 0;
       const availW = mainEl.clientWidth - padX - sideBtns;
       const availH = mainEl.clientHeight - padY;
       w = Math.min(availW, availH * ratio);
     }
+    mainEl.style.setProperty("--book-w", Math.floor(w) + "px"); // 給 CSS 定位按鈕用
     bookEl.style.width = Math.floor(w) + "px";
     bookEl.style.height = Math.floor(w / ratio) + "px";
   }
@@ -97,10 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ---------- 2. 封面 / 封底單頁置中 ---------- */
   function applyShift(index) {
-    const parent = bookEl.querySelector(".stf__parent");
     let x = 0;
-    if (parent && isLandscape()) {
-      const w = parent.offsetWidth;
+    if (isLandscape()) {
+      const w = bookEl.offsetWidth; // #book 已被精準設成書本大小
       if (index === 0) x = -w / 4;
       else if (index >= total - 1) x = w / 4;
     }

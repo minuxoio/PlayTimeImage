@@ -4,7 +4,7 @@
 
 /* 版本標記：script.js 會在 Console 檢查這個值，確認 CSS 真的有更新 */
 :root {
-  --viewer-version: "v8";
+  --viewer-version: "v9";
 }
 
 html,
@@ -34,10 +34,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.site-footer {
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 /* ===== 書本區：左按鈕 + 書本 + 右按鈕 ===== */
 .book-container {
+  position: relative; /* 讓左右按鈕可以用絕對定位 */
   flex: 1 1 0;
   min-height: 0;
   width: 100%;
@@ -68,6 +76,19 @@ body {
 }
 
 /* ===== 翻頁按鈕 ===== */
+/* 桌機：貼在書本左右兩側，位置用 --book-w (script.js 算出) 推算，不受 flex 影響 */
+.book-container > .nav-btn {
+  position: absolute;
+  top: 50%;
+  margin-top: -24px;
+}
+.book-container > #btn-prev {
+  left: max(8px, calc(50% - var(--book-w, 0px) / 2 - 72px));
+}
+.book-container > #btn-next {
+  left: min(calc(100% - 56px), calc(50% + var(--book-w, 0px) / 2 + 24px));
+}
+
 .nav-btn {
   flex: 0 0 auto;
   width: 48px;
